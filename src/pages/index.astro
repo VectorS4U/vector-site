@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
+
+const loginUrl = `${site.appUrl.replace(/\/$/, '')}/login`;
+
+const pillars = [
+  {
+    title: 'Campo y GPS',
+    body: 'Visitas, check-in, rutas y cobertura. El vendedor trabaja en la calle, no en un CRM de escritorio.',
+  },
+  {
+    title: 'Expediente comercial',
+    body: 'Una cuenta estable: prospecto → negociación → cliente. El historial no se borra al convertir.',
+  },
+  {
+    title: 'Cotiza en el CRM',
+    body: 'Producto, existencia y precio canónicos. Versiones, PDF y pedido sin salir a Excel ni al ERP.',
+  },
+  {
+    title: 'Tu ERP, conectado',
+    body: 'Softland u otro vía agente on-prem. Catálogos en Vector; el ERP sigue siendo dueño de lo transaccional.',
+  },
+];
+---
+
+<BaseLayout>
+  <section class="relative overflow-hidden border-b border-border">
+    <div
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(16,185,129,0.12),transparent)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
+    >
+      <p class="text-sm font-semibold uppercase tracking-widest text-brand">
+        {site.tagline}
+      </p>
+      <h1
+        class="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl"
+      >
+        El ciclo comercial completo, sin la complejidad de un CRM enterprise.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        Vector une visitas en campo, pipeline, cotizaciones y conexión ERP en una
+        plataforma que el equipo adopta en días — no en meses.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="/contacto"
+          class="inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+        >
+          Solicitar demo
+        </a>
+        <a
+          href={loginUrl}
+          class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-surface"
+        >
+          Iniciar sesión
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+        Hecho para equipos que venden en la calle
+      </h2>
+      <p class="mt-4 text-muted">
+        No competimos copiando pantallas de Salesforce. Vector prioriza adopción,
+        visitas y cotización operativa.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        pillars.map((item) => (
+          <li class="rounded-xl border border-border bg-white p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-ink">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-border bg-surface">
+    <div
+      class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-4 py-16 sm:flex-row sm:items-center sm:px-6 lg:px-8"
+    >
+      <div class="max-w-xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink">
+          ¿Listo para ver Vector en acción?
+        </h2>
+        <p class="mt-3 text-muted">
+          Te mostramos expediente, cotizador y campo con datos reales de tu operación.
+        </p>
+      </div>
+      <a
+        href="/contacto"
+        class="inline-flex shrink-0 items-center justify-center rounded-lg bg-ink px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+      >
+        Agendar conversación
+      </a>
+    </div>
+  </section>
+</BaseLayout>

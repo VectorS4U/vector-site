@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'hola@s4u.dev';
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Solicita una demo de Vector o escríbenos para conocer el piloto con tu ERP."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg">
+      <h1 class="text-3xl font-bold tracking-tight text-ink">Contacto</h1>
+      <p class="mt-4 text-muted">
+        Cuéntanos tu operación comercial y te mostramos Vector con campo, cotizador
+        e integración ERP.
+      </p>
+
+      <div
+        class="mt-10 rounded-xl border border-border bg-surface p-6 sm:p-8"
+      >
+        <p class="text-sm font-medium text-ink">Correo</p>
+        <a
+          href={`mailto:${email}?subject=Demo%20Vector`}
+          class="mt-1 inline-block text-lg font-semibold text-brand hover:text-brand-dark"
+        >
+          {email}
+        </a>
+        <p class="mt-6 text-sm leading-relaxed text-muted">
+          Próximo paso: formulario o calendario embebido aquí. Por ahora usamos
+          correo para no acoplar el sitio a un proveedor antes del piloto.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
