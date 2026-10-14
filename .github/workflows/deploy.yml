@@ -1,4 +1,7 @@
-# Deploy a la rama gh-pages (Pages: Deploy from a branch → gh-pages / root)
+# Publica el site en vector.group4u.net (BASE_PATH=/).
+# Dos destinos para que funcione con cualquiera de las configs de Pages:
+#   A) Deploy from a branch → gh-pages
+#   B) Source → GitHub Actions (deploy-pages)
 name: Deploy GitHub Pages
 
 on:
@@ -8,13 +11,15 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,18 +34,44 @@ jobs:
       - name: Install
         run: npm ci
 
-      # Dominio custom: assets en / (NO /vector-site/)
-      - name: Build
+      - name: Build for custom domain (root paths)
         run: npm run build
         env:
           SITE_URL: https://vector.group4u.net
           BASE_PATH: /
           PUBLIC_APP_URL: ${{ vars.PUBLIC_APP_URL || 'https://app.vector.app' }}
 
-      - name: Deploy to gh-pages
+      - name: Verify asset paths are root (not /vector-site/)
+        run: |
+          if grep -q '/vector-site/' dist/index.html; then
+            echo "::error::Build still contains /vector-site/ prefixes"
+            grep -o '/vector-site/[^"]*' dist/index.html | head
+            exit 1
+          fi
+          echo "OK: root asset paths"
+          grep -o 'href="/_astro/[^"]*"' dist/index.html | head
+
+      - name: Upload Pages artifact (for Source = GitHub Actions)
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+      - name: Deploy to gh-pages branch (for Source = Deploy from a branch)
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
           cname: vector.group4u.net
+
+  deploy-actions:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages (Actions source)
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
