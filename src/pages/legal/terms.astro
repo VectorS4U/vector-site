@@ -1,0 +1,174 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { legal } from '../../config/legal';
+---
+
+<LegalLayout
+  title="Términos de uso"
+  description={`Términos de uso de ${legal.product}: acceso al servicio, cuentas y responsabilidades.`}
+  path={legal.termsPath}
+>
+  <p>
+    Estos Términos de uso (“Términos”) regulan el acceso y uso de
+    <strong>{legal.product}</strong> (la “Plataforma”), un software como servicio
+    (SaaS) de ejecución comercial operado por <strong>{legal.operator}</strong>
+    (“nosotros”, “nos” o el “Proveedor”), marca comercial {legal.operatorTrade}.
+    Al crear una cuenta, iniciar sesión o usar la Plataforma, aceptás estos
+    Términos en nombre propio o de la organización que representás.
+  </p>
+
+  <h2>1. El servicio</h2>
+  <p>
+    Vector permite a organizaciones B2B gestionar cuentas comerciales, visitas
+    de campo (incl. geolocalización en horario laboral), cotizaciones, pedidos,
+    formularios, supervisión y, cuando estén contratados, conectores hacia ERP,
+    correo u otros sistemas. Las funciones exactas dependen del plan, add-ons y
+    configuración de cada organización (“Organización” o “Cliente”).
+  </p>
+  <p>
+    La Plataforma se ofrece “tal cual” y “según disponibilidad”. Podemos
+    mejorar, suspender o retirar funciones con aviso razonable cuando el cambio
+    sea material, salvo emergencias de seguridad o cumplimiento.
+  </p>
+
+  <h2>2. Cuentas y Organizaciones</h2>
+  <ul>
+    <li>
+      Cada Organización es un espacio aislado (multi-tenant). El administrador
+      de la Organización es responsable de alta/baja de usuarios, roles,
+      políticas internas y del uso lícito de los datos que cargue.
+    </li>
+    <li>
+      Las credenciales son personales. No debés compartir contraseñas ni tokens.
+      El acceso por proveedor de identidad (Google, Microsoft u otro) queda
+      sujeto también a las condiciones de ese proveedor.
+    </li>
+    <li>
+      Debés notificarnos de inmediato si sospechás acceso no autorizado
+      ({legal.contactEmail}).
+    </li>
+  </ul>
+
+  <h2>3. Uso aceptable</h2>
+  <p>Te comprometés a no:</p>
+  <ul>
+    <li>
+      Usar la Plataforma para fines ilícitos, engañosos o que vulneren derechos
+      de terceros.
+    </li>
+    <li>
+      Intentar acceder a datos de otra Organización, eludir controles de acceso,
+      sondear vulnerabilidades sin autorización escrita, o interferir con la
+      disponibilidad del servicio.
+    </li>
+    <li>
+      Cargar malware, contenido ilícito o datos personales de menores de edad
+      (el servicio no está dirigido a menores).
+    </li>
+    <li>
+      Usar el seguimiento GPS fuera de las reglas de la Organización o de la
+      ley aplicable (p. ej. sin informar a los trabajadores cuando corresponda).
+    </li>
+    <li>
+      Revender, sublicenciar o presentar la Plataforma como propia sin acuerdo
+      escrito.
+    </li>
+  </ul>
+
+  <h2>4. Datos del Cliente</h2>
+  <p>
+    La Organización conserva la titularidad de la información comercial que
+    introduce o genera en su espacio (cuentas, contactos, visitas, cotizaciones,
+    evidencias, etc.; “Datos del Cliente”). Nosotros los tratamos para prestar
+    el servicio, de acuerdo con la
+    <a href={legal.privacyPath}>Política de privacidad</a> y, cuando aplique,
+    el contrato comercial o acuerdo de tratamiento de datos.
+  </p>
+  <p>
+    Vos garantizás que tenés base legal y derechos suficientes para cargar esos
+    datos (incluidos datos de clientes finales y, si aplica, ubicación de
+    asesores en horario laboral).
+  </p>
+
+  <h2>5. Integraciones de terceros</h2>
+  <p>
+    Si activás conectores (ERP, correo, webhooks, WhatsApp vía flujos externos,
+    SSO, etc.), sos responsable de las credenciales, mapeos y del cumplimiento
+    frente a esos proveedores. No controlamos sistemas de terceros y no
+    respondemos por su disponibilidad ni por datos que ellos traten fuera de
+    Vector.
+  </p>
+
+  <h2>6. Propiedad intelectual</h2>
+  <p>
+    Vector, su software, marcas, documentación y diseño son propiedad de
+    {legal.operator} o de sus licenciantes. Se otorga una licencia limitada,
+    no exclusiva e intransferible para usar la Plataforma durante la vigencia
+    del contrato o suscripción. No se cede ningún derecho salvo el uso
+    autorizado.
+  </p>
+
+  <h2>7. Planes, facturación y suspensión</h2>
+  <p>
+    Los precios, cupos (p. ej. usuarios) y condiciones comerciales se definen
+    en la propuesta, orden de compra o panel de facturación aplicable. El falta
+    de pago o el incumplimiento grave puede derivar en limitación o suspensión
+    del acceso, previa comunicación razonable salvo fraude o riesgo de
+    seguridad.
+  </p>
+
+  <h2>8. Confidencialidad</h2>
+  <p>
+    Cada parte se compromete a no divulgar información confidencial de la otra
+    obtenida en relación con el servicio, salvo obligación legal, auditoría o
+    personal/proveedores bajo deber de confidencialidad equivalente.
+  </p>
+
+  <h2>9. Garantías y limitación de responsabilidad</h2>
+  <p>
+    En la máxima medida permitida por la ley aplicable, la Plataforma se
+    proporciona sin garantías implícitas de comerciabilidad, idoneidad para un
+    fin particular o no infracción. No garantizamos resultados comerciales
+    concretos (cierres, cuota, cobertura).
+  </p>
+  <p>
+    Salvo dolo o culpa grave, nuestra responsabilidad agregada frente a una
+    Organización por reclamos relacionados con estos Términos no excederá los
+    importes efectivamente pagados por esa Organización al Proveedor en los
+    doce (12) meses anteriores al hecho. No respondemos por daños indirectos,
+    lucro cesante, pérdida de datos recuperables o interrupción del negocio en
+    la medida en que la ley lo permita.
+  </p>
+
+  <h2>10. Terminación</h2>
+  <p>
+    Podés dejar de usar el servicio en cualquier momento. Podemos terminar o
+    suspender el acceso por incumplimiento, o al vencimiento del contrato. Tras
+    la terminación, la Organización puede solicitar exportación de Datos del
+    Cliente en un formato razonable dentro del plazo que indiquemos; luego
+    podrán eliminarse o anonimizarse según la política de retención.
+  </p>
+
+  <h2>11. Cambios</h2>
+  <p>
+    Podemos actualizar estos Términos. La versión vigente se publica en esta
+    URL con su fecha de actualización. El uso continuado tras el aviso
+    razonable implica aceptación, salvo que el contrato comercial establezca
+    otro mecanismo.
+  </p>
+
+  <h2>12. Ley aplicable</h2>
+  <p>
+    Estos Términos se rigen por las leyes aplicables al domicilio del
+    Proveedor, sin perjuicio de normas imperativas del consumidor o de
+    protección de datos que no puedan excluirse. Los tribunales competentes
+    serán los del domicilio de {legal.operator}, salvo pacto distinto en el
+    contrato comercial.
+  </p>
+
+  <h2>13. Contacto</h2>
+  <p>
+    Dudas sobre estos Términos:
+    <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>.
+  </p>
+</LegalLayout>

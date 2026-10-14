@@ -1,60 +1,177 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductShot from '../components/ProductShot.astro';
+import { shots } from '../config/marketing';
+import { withBase } from '../config/paths';
+import { site } from '../config/site';
 
 const modules = [
   {
-    name: 'Inicio y pipeline',
-    detail: 'KPIs del día, oportunidades y montos sincronizados desde cotizaciones enviadas.',
+    name: 'Inicio por rol',
+    summary: 'Asesor, supervisor y gerente ven superficies distintas.',
+    detail:
+      'Asesor: ruta del día con plan, alertas, cobertura y lista de visitas. Supervisor: Home Equipo con cumplimiento, gente en campo y atención. Gerente: Decisión con ritmo de cuota, embudo por monto, tratos quietos y tabla de asesores.',
+    shot: shots.decision,
   },
   {
     name: 'Cuentas y expediente',
-    detail: 'Contactos, visitas, competidores, cotizaciones y pedidos en un solo lugar.',
+    summary: 'Una empresa estable en todo el ciclo.',
+    detail:
+      'Account con estado comercial. Hilo cronológico de contactos, visitas, oportunidades, cotizaciones y pedidos. Al convertir usas el mismo UUID: el historial no se borra.',
+    shot: shots.expediente,
   },
   {
-    name: 'Agenda y visitas',
-    detail: 'Check-in GPS, evidencias y plan de ruta. Prospecto pasa a contactado al cerrar visita.',
+    name: 'Agenda, visitas y tracking',
+    summary: 'Plan aprobado, GPS y mapa del equipo.',
+    detail:
+      'Plan de periodo con aprobación, check-in GPS, evidencias y formularios. Tracking en vivo: asesores en campo, geocercas, paradas y traza del día.',
+    shot: shots.tracking,
   },
   {
     name: 'Cotizador',
-    detail: 'Líneas con catálogo, existencia y condiciones de pago. PDF y versiones.',
+    summary: 'Oferta formal dentro de Vector.',
+    detail:
+      'Quote y líneas con catálogo canónico (producto, existencia, precio, impuestos). Versiones, PDF, envío desde el buzón del asesor, motivos de pérdida y aprobación de descuentos.',
+    shot: shots.quote,
   },
   {
-    name: 'Pedidos',
-    detail: 'Desde cotización aceptada. Webhooks y ERP según tu flujo documental.',
+    name: 'Pedidos e informes',
+    summary: 'Cierre operativo y reportería fija.',
+    detail:
+      'Pedido desde cotización aceptada. Ocho informes fijos: embudo, motivos de pérdida, cotizaciones por antigüedad, visitas vs cobertura, meta vs venta, venta por familia, gasto vs venta y formularios.',
+    shot: null,
   },
   {
     name: 'Integración ERP',
-    detail: 'Agente on-prem: catálogos, alta de cliente y resumen de crédito sin VPN inversa.',
+    summary: 'Conector + modelo canónico.',
+    detail:
+      'Softland vía agente on-prem u Odoo en la nube. Catálogos en Vector. Crédito y condición de pago en la ficha cuando el cliente ya está vinculado. El ERP sigue dueño de lo transaccional.',
+    shot: shots.perfil,
+  },
+];
+
+const extras = [
+  {
+    title: 'Fuerza de venta',
+    body: 'Lente de efectividad por asesor (visitas, cotizaciones, pedidos, conversión, km). FULL ve el ranking gerencial; campo no se distrae con peers.',
+  },
+  {
+    title: 'Cuota y planes',
+    body: 'Planes de venta y cuota anclados a pedidos y proyecciones por cuenta. El ritmo de Decisión se alimenta de lo que el equipo realmente ejecuta.',
+  },
+  {
+    title: 'IA opcional',
+    body: 'Add-on de organización: apoyo en visita, expediente, cotización, plan y briefing «Leer el negocio». Sin add-on, el producto completo sigue igual.',
   },
 ];
 ---
 
 <BaseLayout
   title="Producto"
-  description="Módulos de Vector: campo, CRM comercial, cotizaciones e integración ERP."
+  description="Módulos de Vector: campo, Decisión gerencial, cotizaciones, informes e integración ERP."
 >
   <section class="border-b border-border bg-surface">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+      <p class="text-sm font-semibold uppercase tracking-widest text-brand">
         Producto
+      </p>
+      <h1 class="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+        De la visita al pedido, con gerencia que decide en una pantalla
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-muted">
-        Vector es el sistema donde vive el vendedor: de la visita a la cotización,
-        del pipeline al pedido — con tu ERP conectado cuando lo necesitas.
+        Vector es el sistema donde vive el vendedor. Campo, expediente,
+        cotización y ERP conectado. El asesor ejecuta; el gerente responde
+        cuatro preguntas sin un home de widgets.
       </p>
+      <a
+        href={withBase('/contacto')}
+        class="mt-8 inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+      >
+        Pedir demo
+      </a>
+      <div class="mx-auto mt-10 max-w-md sm:mt-12 sm:max-w-lg">
+        <ProductShot {...shots.route} priority variant="hero" />
+      </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <ul class="divide-y divide-border border-y border-border">
+    <h2 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
+      Módulos
+    </h2>
+    <ul class="mt-10 space-y-16">
       {
         modules.map((mod) => (
-          <li class="flex flex-col gap-1 py-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-            <h2 class="text-base font-semibold text-ink">{mod.name}</h2>
-            <p class="max-w-xl text-sm text-muted">{mod.detail}</p>
+          <li
+            class:list={[
+              'grid gap-8 border-t border-border pt-10 lg:items-start lg:gap-12',
+              mod.shot ? 'lg:grid-cols-2' : '',
+            ]}
+          >
+            <div>
+              <h3 class="text-lg font-semibold text-ink">{mod.name}</h3>
+              <p class="mt-1 text-sm text-brand">{mod.summary}</p>
+              <p class="mt-4 text-sm leading-relaxed text-muted">{mod.detail}</p>
+            </div>
+            {mod.shot ? <ProductShot {...mod.shot} variant="stage" /> : null}
           </li>
         ))
       }
     </ul>
+  </section>
+
+  <section class="border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
+        Más allá del núcleo
+      </h2>
+      <p class="mt-3 max-w-2xl text-muted">
+        Capas que suman cuando tu operación ya corre el ciclo básico.
+      </p>
+      <ul class="mt-10 grid gap-10 sm:grid-cols-3">
+        {
+          extras.map((item) => (
+            <li>
+              <h3 class="text-base font-semibold text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
+          Separación CRM ↔ ERP
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-muted">
+          Prospectos y negociación viven en Vector. Al ganar, conviertes la
+          cuenta y vinculas el ID ERP. Softland u Odoo entran por conector. Si
+          aún no hay conector, el seed demo deja demoar el ciclo completo.
+        </p>
+        <p class="mt-4 text-sm leading-relaxed text-muted">
+          Operado por{' '}
+          <a
+            href={site.companyUrl}
+            class="font-medium text-ink underline decoration-border underline-offset-4 hover:text-brand"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {site.company}
+          </a>
+          . Consultas:{' '}
+          <a
+            href={`mailto:${site.contactEmail}`}
+            class="font-medium text-ink underline decoration-border underline-offset-4 hover:text-brand"
+          >
+            {site.contactEmail}
+          </a>
+          .
+        </p>
+      </div>
+    </div>
   </section>
 </BaseLayout>

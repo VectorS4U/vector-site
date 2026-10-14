@@ -1,0 +1,161 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { legal } from '../config/legal';
+import { withBase } from '../config/paths';
+
+type Props = {
+  title: string;
+  description: string;
+  /** Ruta canónica relativa, p. ej. /legal/privacy */
+  path: string;
+};
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="legal">
+    <header class="legal__header">
+      <p class="legal__eyebrow">Legal · {legal.product}</p>
+      <h1 class="legal__title">{title}</h1>
+      <p class="legal__meta">
+        Última actualización: <time datetime={legal.lastUpdatedIso}
+          >{legal.lastUpdated}</time
+        >
+      </p>
+      <p class="legal__lead">
+        Operado por {legal.operator} (marca {legal.operatorTrade}). Consultas:
+        <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>
+      </p>
+    </header>
+
+    <div class="legal__body">
+      <slot />
+    </div>
+
+    <nav class="legal__nav" aria-label="Documentos legales">
+      <a href={withBase('/legal')}>Índice legal</a>
+      <span aria-hidden="true">·</span>
+      <a href={withBase(legal.termsPath)}>Términos de uso</a>
+      <span aria-hidden="true">·</span>
+      <a href={withBase(legal.privacyPath)}>Política de privacidad</a>
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    margin-inline: auto;
+    max-width: 42rem;
+    padding: 3.5rem 1rem 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .legal {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .legal__eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .legal__title {
+    margin: 0.75rem 0 0;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+
+  .legal__meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .legal__lead {
+    margin: 1rem 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .legal__lead a {
+    color: var(--color-brand-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .legal__body {
+    margin-top: 2.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+
+  .legal__body :global(h2) {
+    margin: 2rem 0 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .legal__body :global(h3) {
+    margin: 1.35rem 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .legal__body :global(p),
+  .legal__body :global(ul) {
+    margin: 0.65rem 0 0;
+  }
+
+  .legal__body :global(ul) {
+    padding-left: 1.25rem;
+  }
+
+  .legal__body :global(li) {
+    margin-top: 0.35rem;
+  }
+
+  .legal__body :global(a) {
+    color: var(--color-brand-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .legal__body :global(strong) {
+    font-weight: 600;
+  }
+
+  .legal__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .legal__nav a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .legal__nav a:hover {
+    color: var(--color-brand-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+</style>

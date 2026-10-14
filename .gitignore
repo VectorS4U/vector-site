@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# PNG fuente de capturas (en repo solo WebP optimizados)
+public/marketing/_raw/

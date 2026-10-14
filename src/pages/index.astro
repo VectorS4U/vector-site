@@ -1,25 +1,106 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductShot from '../components/ProductShot.astro';
+import { shots } from '../config/marketing';
+import { withBase } from '../config/paths';
 import { site } from '../config/site';
 
 const loginUrl = `${site.appUrl.replace(/\/$/, '')}/login`;
 
+const pains = [
+  {
+    title: 'El CRM vive en la oficina',
+    body: 'El asesor cotiza en Excel, anota visitas en WhatsApp y el gerente descubre la semana el viernes. La calle y el sistema no se hablan.',
+  },
+  {
+    title: 'Demasiadas pantallas, poca ejecución',
+    body: 'Salesforce y Zoho piden configurar tableros. Tu equipo necesita cerrar la ruta de hoy y sacar una cotización con existencia real.',
+  },
+  {
+    title: 'El ERP no es un CRM',
+    body: 'Empujar prospectos al Softland u Odoo ensucia maestros. Al ganar, conviertes la misma cuenta y el historial comercial se queda.',
+  },
+];
+
 const pillars = [
   {
     title: 'Campo y GPS',
-    body: 'Visitas, check-in, rutas y cobertura. El vendedor trabaja en la calle, no en un CRM de escritorio.',
+    body: 'Visitas, check-in, plan de ruta y cobertura. Tracking en vivo para quien supervisa. El vendedor trabaja en la calle; el jefe ve el día sin armar un dashboard.',
   },
   {
     title: 'Expediente comercial',
-    body: 'Una cuenta estable: prospecto → negociación → cliente. El historial no se borra al convertir.',
+    body: 'Una Account estable: prospecto, negociación, cliente. Contactos, visitas, cotizaciones y pedidos en un hilo cronológico. Convertir no borra historia.',
   },
   {
     title: 'Cotiza en el CRM',
-    body: 'Producto, existencia y precio canónicos. Versiones, PDF y pedido sin salir a Excel ni al ERP.',
+    body: 'Producto, existencia y precio canónicos. Versiones, PDF, correo desde el buzón del asesor y pedido al aceptar. Sin salir a Excel ni al ERP para armar la oferta.',
   },
   {
     title: 'Tu ERP, conectado',
-    body: 'Softland u otro vía agente on-prem. Catálogos en Vector; el ERP sigue siendo dueño de lo transaccional.',
+    body: 'Softland on-prem u Odoo vía conector. Catálogos en Vector; el ERP sigue dueño de lo transaccional. El CRM funciona también con datos demo mientras conectas.',
+  },
+];
+
+const roles = [
+  {
+    title: 'Asesor',
+    kicker: 'Ejecuta',
+    body: 'Home = ruta del día: plan hecho, alertas, cobertura y lista de visitas. Abre la cuenta, registra la visita y arma la cotización.',
+    shot: shots.route,
+  },
+  {
+    title: 'Supervisor',
+    kicker: 'Opera el equipo',
+    body: 'Home Equipo: quién está en campo, cumplimiento del plan y quién necesita atención. Mapa y agenda a un toque.',
+    shot: shots.team,
+  },
+  {
+    title: 'Gerente',
+    kicker: 'Decide',
+    body: 'Superficie Decisión: ritmo de cuota, embudo por monto, tratos quietos y tabla de asesores. Cada cifra abre su lista.',
+    shot: shots.decision,
+  },
+];
+
+const journey = [
+  {
+    step: '01',
+    title: 'Planifica la ruta',
+    body: 'El asesor arma el plan del periodo; el supervisor aprueba. La cobertura deja de ser un Excel semanal.',
+  },
+  {
+    step: '02',
+    title: 'Visita y evidencia',
+    body: 'Check-in GPS, resultado de visita y formularios. El prospecto pasa a contactado cuando cierra la visita.',
+  },
+  {
+    step: '03',
+    title: 'Cotiza con datos reales',
+    body: 'Líneas desde catálogo, existencia y precio. Envía PDF por correo comercial y versiona si negocias.',
+  },
+  {
+    step: '04',
+    title: 'Pedido y seguimiento',
+    body: 'Desde cotización aceptada creas el pedido en Vector. El gerente ve embudo, tratos quietos e informes fijos.',
+  },
+];
+
+const faqs = [
+  {
+    q: '¿Reemplaza Vector a nuestro ERP?',
+    a: 'No. Vector es dueño del ciclo comercial; Softland, Odoo u otro ERP sigue siendo dueño de lo transaccional. Conectamos catálogos, cliente y (según flujo) pedido.',
+  },
+  {
+    q: '¿Sirve si aún no tenemos conector ERP?',
+    a: 'Sí. Cotizador, visitas y pipeline corren con catálogos demo o cargados en Vector. El conector se suma cuando el piloto lo pide.',
+  },
+  {
+    q: '¿El asesor necesita laptop en campo?',
+    a: 'La app móvil cubre ruta, visita y cotización en borrador. Web es para gerente, supervisor y trabajo de escritorio (Decisión, informes, expediente completo).',
+  },
+  {
+    q: '¿Hay constructor de reportes?',
+    a: 'No. Hay ocho informes fijos (embudo, motivos de pérdida, antigüedad de cotizaciones, cobertura, meta vs venta, familia, gasto vs venta, formularios). Menos configuración, más respuestas.',
   },
 ];
 ---
@@ -27,63 +108,271 @@ const pillars = [
 <BaseLayout>
   <section class="relative overflow-hidden border-b border-border">
     <div
-      class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(16,185,129,0.12),transparent)]"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(16,185,129,0.14),transparent),linear-gradient(180deg,#f8fafc_0%,#ffffff_55%)]"
       aria-hidden="true"
     >
     </div>
     <div
-      class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
+      class="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:gap-12 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-8 lg:px-8 lg:py-24"
     >
-      <p class="text-sm font-semibold uppercase tracking-widest text-brand">
-        {site.tagline}
-      </p>
-      <h1
-        class="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl"
-      >
-        El ciclo comercial completo, sin la complejidad de un CRM enterprise.
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        Vector une visitas en campo, pipeline, cotizaciones y conexión ERP en una
-        plataforma que el equipo adopta en días — no en meses.
-      </p>
-      <div class="mt-10 flex flex-wrap items-center gap-4">
-        <a
-          href="/contacto"
-          class="inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+      <div class="min-w-0">
+        <p class="text-sm font-semibold uppercase tracking-widest text-brand">
+          Vector · {site.tagline}
+        </p>
+        <h1
+          class="mt-4 max-w-xl text-4xl font-bold tracking-tight text-ink sm:text-5xl"
         >
-          Solicitar demo
-        </a>
-        <a
-          href={loginUrl}
-          class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-surface"
-        >
-          Iniciar sesión
-        </a>
+          El ciclo comercial completo, sin la complejidad de un CRM enterprise.
+        </h1>
+        <p class="mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+          Visitas en campo, expediente, cotizaciones y ERP conectado. El asesor
+          ejecuta la ruta; el gerente decide la semana en una pantalla. Hecho por{' '}
+          {site.company} para equipos que venden en la calle.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href={withBase('/contacto')}
+            class="inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+          >
+            Solicitar demo
+          </a>
+          <a
+            href={withBase('/producto')}
+            class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface"
+          >
+            Ver producto
+          </a>
+        </div>
       </div>
+
+      <div class="mx-auto w-full max-w-[20rem] sm:max-w-[24rem] lg:mx-0 lg:max-w-[28rem] lg:justify-self-end">
+        <ProductShot {...shots.tracking} priority variant="hero" />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-border bg-ink text-white">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <p class="max-w-3xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Si tu fuerza de ventas vive en Excel, WhatsApp y un CRM que nadie abre
+        en la ruta, Vector pone el trabajo comercial en un solo sistema: plan,
+        visita, cotización, pedido y pulso gerencial.
+      </p>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
     <div class="max-w-2xl">
       <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-        Hecho para equipos que venden en la calle
+        El problema que resolvemos
       </h2>
       <p class="mt-4 text-muted">
-        No competimos copiando pantallas de Salesforce. Vector prioriza adopción,
-        visitas y cotización operativa.
+        Los CRM enterprise miden actividad. Los ERP registran facturas. En el
+        medio queda la ejecución: ¿quién visitó, cotizó y cerró esta semana?
       </p>
     </div>
-
-    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+    <ul class="mt-12 grid gap-10 sm:grid-cols-3">
       {
-        pillars.map((item) => (
-          <li class="rounded-xl border border-border bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-ink">{item.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+        pains.map((item) => (
+          <li>
+            <h3 class="text-base font-semibold text-ink">{item.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{item.body}</p>
           </li>
         ))
       }
     </ul>
+  </section>
+
+  <section class="border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Cada rol ve lo que le toca
+        </h2>
+        <p class="mt-4 text-muted">
+          Dos superficies, dos dueños. Campo ejecuta. Gerencia decide. El home
+          del asesor no es un tablero personalizable.
+        </p>
+      </div>
+      <ul class="mt-12 grid gap-8 sm:gap-10 lg:grid-cols-3">
+        {
+          roles.map((role, i) => (
+            <li class="flex flex-col gap-3">
+              <ProductShot
+                {...role.shot}
+                variant="tile"
+                mirror={i === 2}
+              />
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-brand">
+                  {role.kicker}
+                </p>
+                <h3 class="mt-1 text-lg font-semibold text-ink">{role.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted">{role.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Expediente: un hilo, no paneles sueltos
+          </h2>
+          <p class="mt-4 text-muted leading-relaxed">
+            La cuenta es estable de prospecto a cliente. Visitas, cotizaciones y
+            pedidos viven en el mismo expediente. Al convertir, el historial se
+            queda; solo se vincula el ID ERP.
+          </p>
+          <ul class="mt-6 space-y-3 text-sm text-muted">
+            <li class="flex gap-3">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              Próximo paso visible (visita, cotizar, abrir)
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              Crédito y condición de pago cuando ya es cliente ERP
+            </li>
+          </ul>
+        </div>
+        <ProductShot {...shots.expediente} variant="stage" />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Cuatro ejes del producto
+        </h2>
+        <p class="mt-4 text-muted">
+          Priorizamos adopción, visitas y cotización operativa. Si una pantalla
+          no ayuda a ejecutar o decidir, no entra.
+        </p>
+      </div>
+      <ul class="mt-12 grid gap-8 sm:grid-cols-2">
+        {
+          pillars.map((item) => (
+            <li class="border-l-2 border-brand pl-5">
+              <h3 class="text-lg font-semibold text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Del plan al pedido
+        </h2>
+        <p class="mt-4 text-muted">
+          Un flujo corto que el equipo entiende el primer día. Sin menús de
+          doce módulos para encontrar la visita de hoy.
+        </p>
+      </div>
+      <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          journey.map((item) => (
+            <li>
+              <p class="text-sm font-bold tabular-nums text-brand">{item.step}</p>
+              <h3 class="mt-2 text-base font-semibold text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Cotiza en el CRM, con stock y versiones
+          </h2>
+          <p class="mt-4 text-muted leading-relaxed">
+            Líneas desde catálogo, existencia visible, PDF y envío desde el
+            buzón del asesor. Versionás la oferta sin salir a Excel ni al ERP.
+            Al aceptar, creás el pedido pre-factura.
+          </p>
+          <ul class="mt-6 space-y-3 text-sm text-muted">
+            <li class="flex gap-3">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              Stock e IVA por línea
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              Historial de versiones (v1, v2…)
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              Enviar / PDF desde la misma hoja
+            </li>
+          </ul>
+        </div>
+        <ProductShot {...shots.quote} variant="stage" />
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <ProductShot
+          {...shots.decision}
+          variant="stage"
+          mirror
+          class="order-2 lg:order-1"
+        />
+        <div class="order-1 lg:order-2">
+          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Gerencia con preguntas, no con widgets
+          </h2>
+          <p class="mt-4 text-muted leading-relaxed">
+            La home del gerente responde cuatro cosas: ritmo de cuota, embudo
+            por monto, tratos quietos y a quién llamar. Tracking y Home Equipo
+            dan al supervisor el día en caliente.
+          </p>
+          <a
+            href={withBase('/producto')}
+            class="mt-6 inline-flex text-sm font-semibold text-brand hover:text-brand-dark"
+          >
+            Detalle de módulos →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Preguntas frecuentes
+        </h2>
+      </div>
+      <dl class="mt-12 divide-y divide-border border-y border-border">
+        {
+          faqs.map((item) => (
+            <div class="grid gap-2 py-6 sm:grid-cols-[minmax(0,14rem)_1fr] sm:gap-10">
+              <dt class="text-sm font-semibold text-ink">{item.q}</dt>
+              <dd class="text-sm leading-relaxed text-muted">{item.a}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </section>
 
   <section class="border-t border-border bg-surface">
@@ -95,15 +384,31 @@ const pillars = [
           ¿Listo para ver Vector en acción?
         </h2>
         <p class="mt-3 text-muted">
-          Te mostramos expediente, cotizador y campo con datos reales de tu operación.
+          Escribe a{' '}
+          <a
+            href={`mailto:${site.contactEmail}?subject=Demo%20Vector`}
+            class="font-medium text-ink underline decoration-border underline-offset-4 hover:text-brand"
+          >
+            {site.contactEmail}
+          </a>
+          {' '}y te mostramos ruta del día, Decisión gerencial, cotizador y
+          expediente con datos de tu operación.
         </p>
       </div>
-      <a
-        href="/contacto"
-        class="inline-flex shrink-0 items-center justify-center rounded-lg bg-ink px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-      >
-        Agendar conversación
-      </a>
+      <div class="flex shrink-0 flex-wrap gap-3">
+        <a
+          href={withBase('/contacto')}
+          class="inline-flex items-center justify-center rounded-lg bg-ink px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+        >
+          Agendar conversación
+        </a>
+        <a
+          href={loginUrl}
+          class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-surface"
+        >
+          Iniciar sesión
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

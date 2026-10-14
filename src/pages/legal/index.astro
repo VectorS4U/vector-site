@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { legal } from '../../config/legal';
+import { withBase } from '../../config/paths';
+
+const docs = [
+  {
+    href: withBase(legal.termsPath),
+    title: 'Términos de uso',
+    blurb:
+      'Condiciones del servicio Vector: cuentas, uso aceptable, datos del cliente y límites de responsabilidad.',
+  },
+  {
+    href: withBase(legal.privacyPath),
+    title: 'Política de privacidad',
+    blurb:
+      'Qué datos tratamos (incl. GPS en horario laboral), para qué, con quién y cómo ejercer derechos.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Legal"
+  description="Términos de uso y política de privacidad de Vector."
+>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold tracking-tight text-ink">Legal</h1>
+    <p class="mt-4 max-w-xl text-muted">
+      Documentos públicos de {legal.product}, operado por {legal.operator}.
+      Necesarios para el acceso al servicio y para las tiendas de aplicaciones.
+    </p>
+
+    <ul class="mt-10 divide-y divide-border border-y border-border">
+      {
+        docs.map((doc) => (
+          <li>
+            <a
+              href={doc.href}
+              class="block py-5 transition-colors hover:bg-surface/80"
+            >
+              <span class="text-base font-semibold text-ink">{doc.title}</span>
+              <span class="mt-1 block text-sm leading-relaxed text-muted">
+                {doc.blurb}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-8 text-sm text-muted">
+      Contacto:
+      <a
+        class="font-medium text-brand-dark underline-offset-2 hover:underline"
+        href={`mailto:${legal.contactEmail}`}
+      >
+        {legal.contactEmail}
+      </a>
+    </p>
+  </section>
+</BaseLayout>

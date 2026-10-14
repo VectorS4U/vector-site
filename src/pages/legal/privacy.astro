@@ -1,0 +1,186 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { legal } from '../../config/legal';
+---
+
+<LegalLayout
+  title="Política de privacidad"
+  description={`Política de privacidad de ${legal.product}: datos tratados, GPS, derechos y contacto.`}
+  path={legal.privacyPath}
+>
+  <p>
+    Esta Política describe cómo <strong>{legal.operator}</strong> (“nosotros”),
+    marca {legal.operatorTrade}, trata datos personales al operar
+    <strong>{legal.product}</strong> (web, API y app móvil). Complementa los
+    <a href={legal.termsPath}>Términos de uso</a>.
+  </p>
+  <p>
+    Vector es un producto B2B multi-tenant. En la mayoría de los casos,
+    <strong>la Organización cliente</strong> decide qué datos de negocio y de
+    su fuerza de ventas introduce; nosotros los procesamos para prestar el
+    servicio. Cuando actuamos como responsables (p. ej. cuentas de prospectos
+    comerciales nuestros, sitio público o facturación con el Cliente), lo
+    indicamos abajo.
+  </p>
+
+  <h2>1. Datos que tratamos</h2>
+
+  <h3>1.1 Cuenta y autenticación</h3>
+  <ul>
+    <li>Nombre, correo electrónico, contraseña (hash) o identificadores SSO.</li>
+    <li>Organización (slug), roles y permisos.</li>
+    <li>Registros de acceso, dirección IP, tipo de cliente (web/móvil) y eventos de seguridad.</li>
+  </ul>
+
+  <h3>1.2 Datos de negocio de la Organización (Datos del Cliente)</h3>
+  <ul>
+    <li>
+      Cuentas comerciales, contactos, oportunidades, cotizaciones, pedidos,
+      notas, formularios y evidencias (p. ej. fotos de visita).
+    </li>
+    <li>
+      Catálogos, precios y vínculos ERP cuando la Organización los sincroniza.
+    </li>
+    <li>
+      Correo comercial u otros conectores si el administrador los autoriza.
+    </li>
+  </ul>
+
+  <h3>1.3 Ubicación y campo (GPS)</h3>
+  <ul>
+    <li>
+      Durante el uso de la app de campo, podemos recibir coordenadas asociadas
+      a check-in/check-out, ruta del día y seguimiento de flota.
+    </li>
+    <li>
+      <strong>Privacidad por diseño:</strong> no persistimos ni exponemos
+      puntos GPS fuera de la ventana laboral configurada por la Organización
+      (<code>workdayStart</code>–<code>workdayEnd</code>, en su zona horaria).
+    </li>
+    <li>
+      La Organización es responsable de informar a sus trabajadores y de
+      cumplir la normativa laboral y de protección de datos aplicable al
+      seguimiento.
+    </li>
+  </ul>
+
+  <h3>1.4 Dispositivo y diagnóstico</h3>
+  <ul>
+    <li>
+      Datos técnicos mínimos para estabilidad (versión de app/SO, fallos,
+      conectividad). No vendemos perfiles publicitarios.
+    </li>
+  </ul>
+
+  <h3>1.5 Sitio público y contacto</h3>
+  <ul>
+    <li>
+      Si nos escribís a {legal.contactEmail} o usás formularios futuros,
+      tratamos el contenido de la consulta para responderte.
+    </li>
+  </ul>
+
+  <h2>2. Finalidades</h2>
+  <ul>
+    <li>Prestar, asegurar y mejorar la Plataforma.</li>
+    <li>Autenticar usuarios y prevenir abuso.</li>
+    <li>Ejecutar visitas, cotizaciones, supervisión e integraciones contratadas.</li>
+    <li>Cumplir obligaciones legales, contractuales y de facturación.</li>
+    <li>Comunicar cambios materiales del servicio o de esta Política.</li>
+  </ul>
+
+  <h2>3. Base del tratamiento</h2>
+  <p>
+    Según el caso: ejecución del contrato con la Organización o con el
+    usuario; interés legítimo en seguridad y mejora del producto (equilibrado
+    frente a derechos); consentimiento cuando la ley lo exija (p. ej. ciertos
+    permisos de ubicación en el dispositivo); u obligación legal.
+  </p>
+
+  <h2>4. Encargados y terceros</h2>
+  <p>
+    Podemos usar proveedores de infraestructura (hosting, bases de datos,
+    correo transaccional, monitoreo) bajo acuerdos de confidencialidad y
+    tratamiento. También intervienen, cuando la Organización los activa:
+    proveedores de identidad (SSO), ERP, Microsoft/Google para casilla
+    comercial, o destinos de webhooks configurados por el Cliente.
+  </p>
+  <p>
+    No vendemos datos personales. No compartimos Datos del Cliente con otras
+    Organizaciones.
+  </p>
+
+  <h2>5. Transferencias internacionales</h2>
+  <p>
+    Los datos pueden alojarse o procesarse en regiones donde operen nuestros
+    proveedores cloud. Aplicamos salvaguardas razonables (contratos, cifrado en
+    tránsito, controles de acceso). Si necesitás detalle de ubicación de
+    datos para un piloto, escribinos.
+  </p>
+
+  <h2>6. Conservación</h2>
+  <ul>
+    <li>
+      Mientras la Organización mantenga la suscripción y según plazos del
+      contrato.
+    </li>
+    <li>
+      Tras la baja, exportación opcional y luego eliminación o anonimización
+      en un plazo razonable, salvo retención legal (facturación, seguridad).
+    </li>
+    <li>
+      Registros técnicos y de seguridad: el tiempo necesario para
+      investigación y cumplimiento.
+    </li>
+  </ul>
+
+  <h2>7. Seguridad</h2>
+  <p>
+    Aplicamos medidas técnicas y organizativas acordes al riesgo
+    (autenticación, aislamiento multi-tenant, cifrado en tránsito, controles
+    de permisos). Ningún sistema es 100&nbsp;% seguro; reportá incidentes a
+    <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>.
+  </p>
+
+  <h2>8. Derechos</h2>
+  <p>
+    Según la ley aplicable, podés solicitar acceso, rectificación, actualización,
+    oposición, limitación o eliminación de datos personales que tratemos como
+    responsables. Si los datos los controla tu Organización (p. ej. ficha de
+    cliente o tu usuario de empleado), contactá primero al administrador de
+    Vector en tu empresa; podemos asistirles como encargados.
+  </p>
+  <p>
+    Para ejercer derechos frente a nosotros:
+    <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>.
+    Podremos verificar identidad antes de responder.
+  </p>
+
+  <h2>9. Menores</h2>
+  <p>
+    El servicio está dirigido a uso profesional por adultos. No recopilamos
+    a sabiendas datos de menores de 18 años.
+  </p>
+
+  <h2>10. Cookies y sitio marketing</h2>
+  <p>
+    El sitio público de Vector puede usar cookies técnicas necesarias para
+    funcionamiento y, en el futuro, medición agregada. La app y el CRM usan
+    almacenamiento local/sesión para autenticación y preferencias, no para
+    publicidad de terceros.
+  </p>
+
+  <h2>11. Cambios</h2>
+  <p>
+    Publicaremos la Política actualizada en esta URL con nueva fecha. Si el
+    cambio es material, procuraremos aviso razonable (p. ej. en el login o por
+    correo a administradores).
+  </p>
+
+  <h2>12. Contacto</h2>
+  <p>
+    Responsable de privacidad / consultas:
+    <a href={`mailto:${legal.contactEmail}`}>{legal.contactEmail}</a>
+    · {legal.operator} ({legal.operatorTrade}).
+  </p>
+</LegalLayout>

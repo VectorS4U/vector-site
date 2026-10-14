@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { withBase } from '../config/paths';
 import { site } from '../config/site';
 
 type Props = {
@@ -25,7 +26,7 @@ const canonical = new URL(Astro.url.pathname, site.url);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
