@@ -17,8 +17,11 @@ const base = rawBase === '/' ? '/' : rawBase.replace(/\/?$/, '/');
 export default defineConfig({
   site,
   base,
+  /** GitHub Pages sirve carpetas (`producto/index.html`); sin `/` final → 404. */
+  trailingSlash: 'always',
   output: 'static',
   vite: {
     plugins: [tailwindcss()],
   },
 });
+
