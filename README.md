@@ -38,23 +38,22 @@ Abre [http://localhost:4321](http://localhost:4321). En local puedes usar `BASE_
 
 `group4u.net` puede seguir en tu hosting actual. Vector se publica aparte desde este repo (`VectorS4U/vector-site`).
 
-### Deploy (GitHub Actions)
+### Deploy (GitHub Actions → rama `gh-pages`)
 
-1. Repo → **Settings → Pages → Source: GitHub Actions**
-2. Push a `main` (workflow `.github/workflows/deploy.yml`)
-3. El workflow usa `configure-pages` para calcular solo `SITE_URL` / `BASE_PATH`:
-   - Sin dominio custom → `https://vectors4u.github.io/vector-site/`
-   - Con custom domain → raíz (`https://tu-dominio/`) y `BASE_PATH=/`
+1. Push a `main` (workflow publica en la rama `gh-pages`)
+2. Repo → **Settings → Pages**:
+   - **Source:** Deploy from a branch
+   - **Branch:** `gh-pages` / `/` (root) → **Save**
+3. Variable opcional `PUBLIC_APP_URL` (login de la app)
 
-**Importante:** no dejes Variables de Actions viejas `SITE_URL` / `BASE_PATH` con `/vector-site/`
-si ya configuraste dominio propio: rompen CSS e imágenes (HTML sin estilos).
-Bórralas o deja solo `PUBLIC_APP_URL`.
-
-### Dominio custom (ej. `vector.group4u.net`)
+**Dominio custom** (ej. `vector.group4u.net`):
 
 1. DNS: `CNAME vector → vectors4u.github.io`
-2. Pages → **Custom domain** = `vector.group4u.net` + Enforce HTTPS
-3. Re-run del workflow (el build tomará `BASE_PATH=/` solo)
+2. Variable de Actions: `CUSTOM_DOMAIN` = `vector.group4u.net`  
+   (así el build usa `BASE_PATH=/` y escribe `CNAME` en el artifact)
+3. Pages → Custom domain = `vector.group4u.net` + Enforce HTTPS
+
+Sin `CUSTOM_DOMAIN` → site en `https://vectors4u.github.io/vector-site/`
 
 Legal/apps: `{origen}/legal/terms/` (con project site sin custom domain incluye `/vector-site`).
 

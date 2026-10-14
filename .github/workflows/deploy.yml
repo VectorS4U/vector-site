@@ -1,5 +1,5 @@
-# Deploy estático a GitHub Pages (Astro → dist/)
-# Requisito: Settings → Pages → Source = GitHub Actions
+# Deploy estático a la rama gh-pages (Pages "Deploy from a branch").
+# Evita actions/deploy-pages (API que a veces responde 500).
 name: Deploy GitHub Pages
 
 on:
@@ -8,16 +8,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,38 +27,38 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
       - name: Install
         run: npm ci
 
-      # base_path vacío = dominio custom o user site → BASE_PATH=/
-      # project site sin custom domain → /vector-site
-      - name: Build
-        run: |
-          echo "origin=${{ steps.pages.outputs.origin }}"
-          echo "base_url=${{ steps.pages.outputs.base_url }}"
-          echo "base_path=${{ steps.pages.outputs.base_path }}"
-          npm run build
+      # Con custom domain Pages sirve en raíz → BASE_PATH=/
+      # Sin custom domain (…/vector-site/) → BASE_PATH=/vector-site/
+      - name: Resolve Pages base
+        id: base
         env:
-          SITE_URL: ${{ steps.pages.outputs.origin }}
-          BASE_PATH: ${{ steps.pages.outputs.base_path || '/' }}
+          CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+        run: |
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            echo "site_url=https://${CUSTOM_DOMAIN}" >> "$GITHUB_OUTPUT"
+            echo "base_path=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "site_url=https://vectors4u.github.io" >> "$GITHUB_OUTPUT"
+            echo "base_path=/vector-site/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: ${{ steps.base.outputs.site_url }}
+          BASE_PATH: ${{ steps.base.outputs.base_path }}
           PUBLIC_APP_URL: ${{ vars.PUBLIC_APP_URL || 'https://app.vector.app' }}
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
+      - name: Write CNAME if custom domain
+        if: ${{ vars.CUSTOM_DOMAIN != '' }}
+        run: echo "${{ vars.CUSTOM_DOMAIN }}" > dist/CNAME
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
