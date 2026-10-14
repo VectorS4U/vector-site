@@ -3,15 +3,18 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 /**
- * GitHub Pages (repo VectorS4U/vector-site):
- *   SITE_URL=https://vectors4u.github.io  BASE_PATH=/vector-site
- * Dominio propio (recomendado, p. ej. vector.group4u.net):
- *   SITE_URL=https://vector.group4u.net  BASE_PATH=/
+ * En CI, `actions/configure-pages` define SITE_URL + BASE_PATH:
+ * - dominio custom → BASE_PATH=/
+ * - project site (…github.io/vector-site) → BASE_PATH=/vector-site/
+ *
+ * Local: raíz por defecto (sin prefijo).
  */
-const site = process.env.SITE_URL ?? 'https://vectors4u.github.io';
-/** Astro normaliza; preferir con barra final en project Pages. */
-const rawBase = process.env.BASE_PATH ?? '/vector-site';
-const base = rawBase === '/' ? '/' : rawBase.replace(/\/?$/, '/');
+const site = process.env.SITE_URL ?? 'http://localhost:4321';
+const rawBase = process.env.BASE_PATH ?? '/';
+const base =
+  !rawBase || rawBase === '/'
+    ? '/'
+    : rawBase.replace(/\/?$/, '/');
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,4 +27,3 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 });
-

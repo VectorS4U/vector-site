@@ -13,7 +13,7 @@ export const site = {
   url:
     import.meta.env.SITE ??
     import.meta.env.SITE_URL ??
-    'https://vectors4u.github.io',
+    'http://localhost:4321',
   /** App Angular — login del tenant. Override con PUBLIC_APP_URL en .env */
   appUrl: import.meta.env.PUBLIC_APP_URL ?? 'http://localhost:4200',
   /** Operador / empresa. */

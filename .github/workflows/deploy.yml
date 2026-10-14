@@ -30,17 +30,23 @@ jobs:
           cache: npm
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Install
         run: npm ci
 
+      # base_path vacío = dominio custom o user site → BASE_PATH=/
+      # project site sin custom domain → /vector-site
       - name: Build
-        run: npm run build
+        run: |
+          echo "origin=${{ steps.pages.outputs.origin }}"
+          echo "base_url=${{ steps.pages.outputs.base_url }}"
+          echo "base_path=${{ steps.pages.outputs.base_path }}"
+          npm run build
         env:
-          # Override en Settings → Variables: SITE_URL, BASE_PATH, PUBLIC_APP_URL
-          SITE_URL: ${{ vars.SITE_URL || 'https://vectors4u.github.io' }}
-          BASE_PATH: ${{ vars.BASE_PATH || '/vector-site/' }}
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path || '/' }}
           PUBLIC_APP_URL: ${{ vars.PUBLIC_APP_URL || 'https://app.vector.app' }}
 
       - name: Upload Pages artifact
