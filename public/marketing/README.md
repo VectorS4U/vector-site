@@ -11,6 +11,12 @@ Archivos servidos (WebP):
 | `expediente-thread.webp` | Hilo del expediente |
 | `expediente-perfil.webp` | Ficha + crédito ERP |
 | `quote-composer.webp` | Cotizador (líneas, stock, versiones) |
+| `mobile-login.webp` | App: login |
+| `mobile-route.webp` | App: ruta del día (Hoy) |
+| `mobile-clientes.webp` | App: listado clientes |
+| `mobile-cotizar.webp` | App: cotizaciones |
+| `mobile-expediente.webp` | App: ficha / hilo |
+| `mobile-visita.webp` | App: detalle de visita + Llegué |
 
 PNG originales → `_raw/` (ignorado por git). Para regenerar:
 

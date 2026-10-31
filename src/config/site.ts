@@ -4,7 +4,7 @@ export const site = {
   name: 'Vector',
   tagline: 'Sales Execution Platform',
   description:
-    'CRM comercial con campo, GPS, cotizaciones y Decisión gerencial. Simple de adoptar; fuerte en visitas.',
+    'CRM comercial con app de campo, GPS, expediente, cotizaciones y Decisión gerencial. Softland u Odoo conectados; simple de adoptar.',
   locale: 'es',
   /**
    * Origen canónico (SEO). En build Astro también inyecta `import.meta.env.SITE`.

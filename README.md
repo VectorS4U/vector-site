@@ -74,8 +74,8 @@ Assets en `public/brand/` (copiados de `vector_web`). Tokens en `src/styles/glob
 
 ## Páginas (v1)
 
-- `/` — Home marketing (problema, pilares, roles, journey, cotización/Decisión, FAQ)
-- `/producto` — Módulos ampliados + ERP / extras
+- `/` — Home marketing (problema, pilares, roles, hilo, cotización/Decisión, FAQ Softland/BI)
+- `/producto` — Módulos + ERP agente + extras (IA, BI)
 - `/contacto` — Demo · `team@group4u.net` · [group4u.net](https://group4u.net)
 - `/legal` — Índice
 - `/legal/terms` — Términos de uso (Play Store / App Store / login)
