@@ -4,7 +4,7 @@ export const site = {
   name: 'Vector',
   tagline: 'Sales Execution Platform',
   description:
-    'Rutas, visitas, cotizaciones y seguimiento comercial en un solo sistema. Softland u Odoo conectados; simple de adoptar en campo.',
+    'Rutas, visitas, cotizaciones y seguimiento comercial en un solo sistema. Integración con Softland u Odoo según el alcance acordado.',
   locale: 'es',
   /**
    * Origen canónico (SEO). En build Astro también inyecta `import.meta.env.SITE`.
@@ -33,6 +33,24 @@ export const site = {
     /\D/g,
     '',
   ) ?? '',
+  /**
+   * Video demo 60–90 s (URL YouTube/Vimeo o archivo). Vacío = no mostrar bloque.
+   * Override: PUBLIC_DEMO_VIDEO_URL
+   */
+  demoVideoUrl: (import.meta.env.PUBLIC_DEMO_VIDEO_URL as string | undefined)?.trim() ?? '',
+} as const;
+
+/**
+ * Testimonio del piloto. Completar cuando haya cita validada.
+ * Mientras `quote` esté vacío, el sitio muestra un bloque honesto sin inventar nombres.
+ */
+export const pilotEvidence = {
+  /** Ej.: «Usamos Vector para la ruta y el seguimiento del día.» */
+  quote: '',
+  /** Ej.: Gerente comercial · Operación piloto */
+  attribution: '',
+  /** Una línea de resultado medido, solo si está validado. */
+  result: '',
 } as const;
 
 export const nav = [

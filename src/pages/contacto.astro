@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../config/paths';
 import { site } from '../config/site';
 
 const formAction = `https://formsubmit.co/${site.contactEmail}`;
+/** FormSubmit exige URL absoluta; en CI usa SITE_URL, si no el dominio público. */
+const thankYouOrigin =
+  (import.meta.env.SITE as string | undefined) ||
+  (import.meta.env.SITE_URL as string | undefined) ||
+  'https://vector.group4u.net';
+const thankYouUrl = new URL(withBase('/gracias/'), thankYouOrigin).href;
 const whatsappUrl = site.whatsappE164
   ? `https://wa.me/${site.whatsappE164}?text=${encodeURIComponent(
       'Hola, quiero solicitar una demostración de Vector.',
@@ -51,6 +58,7 @@ const topics = [
           <input type="hidden" name="_subject" value="Demo Vector — solicitud web" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value={thankYouUrl} />
           <input
             type="text"
             name="_honey"

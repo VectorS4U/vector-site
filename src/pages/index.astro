@@ -3,9 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductShot from '../components/ProductShot.astro';
 import { shots } from '../config/marketing';
 import { withBase } from '../config/paths';
-import { site } from '../config/site';
+import { pilotEvidence, site } from '../config/site';
 
 const loginUrl = `${site.appUrl.replace(/\/$/, '')}/login`;
+const hasTestimonial = Boolean(pilotEvidence.quote.trim());
+const hasVideo = Boolean(site.demoVideoUrl);
 
 const pains = [
   {
@@ -39,25 +41,6 @@ const roleQuestions = [
   },
 ];
 
-const pillars = [
-  {
-    title: 'App de campo',
-    body: 'Ruta, check-in con GPS, visita y cotización en borrador en iOS o Android. Sin señal, el vendedor sigue con la información ya sincronizada; al recuperar conexión, Vector actualiza el trabajo pendiente.',
-  },
-  {
-    title: 'Expediente estable',
-    body: 'La cuenta pasa de prospecto a cliente sin borrar historia. Visitas, cotizaciones y pedidos viven en un hilo, con un resumen claro de la relación.',
-  },
-  {
-    title: 'Cotización en el CRM',
-    body: 'Catálogo, existencia y precio en el mismo lugar. Borrador en el móvil; versiones, PDF y correo en web. Pedido cuando el cliente acepta.',
-  },
-  {
-    title: 'ERP conectado',
-    body: 'Softland u Odoo siguen dueños de lo transaccional. Vector concentra el ciclo comercial. Se puede recorrer el producto con datos de demostración mientras el conector entra en piloto.',
-  },
-];
-
 const roles = [
   {
     title: 'Vendedor',
@@ -75,8 +58,8 @@ const roles = [
   },
   {
     title: 'Gerente',
-    kicker: 'Decide en web',
-    body: 'Ritmo de cuota, embudo por monto, oportunidades sin seguimiento y tabla de asesores. Cada cifra abre su lista.',
+    kicker: 'Prioriza la gestión',
+    body: 'Ritmo de cuota, embudo por monto, oportunidades sin seguimiento y tabla de asesores. Consulte el detalle detrás de cada indicador.',
     shot: shots.decision,
     phone: false,
   },
@@ -101,7 +84,26 @@ const journey = [
   {
     step: '04',
     title: 'Pedido y seguimiento',
-    body: 'Desde la cotización aceptada se crea el pedido en Vector. Gerencia ve embudo, oportunidades sin movimiento e informes fijos.',
+    body: 'Desde la cotización aceptada se crea el pedido en Vector. Gerencia ve el embudo, oportunidades sin movimiento e informes fijos.',
+  },
+];
+
+const startSteps = [
+  {
+    title: 'Revisamos su operación',
+    body: 'Cómo venden hoy, con qué ERP y qué problemas quieren resolver primero.',
+  },
+  {
+    title: 'Demostramos los flujos relevantes',
+    body: 'Ruta, visita, cotización y seguimiento de gerencia con datos cercanos a su caso.',
+  },
+  {
+    title: 'Acordamos el alcance del piloto',
+    body: 'Usuarios, módulos e integración Softland u Odoo según lo que aplique.',
+  },
+  {
+    title: 'Definimos cómo evaluar resultados',
+    body: 'Qué miraremos juntos para decidir si avanzan a contratación.',
   },
 ];
 
@@ -112,7 +114,7 @@ const faqs = [
   },
   {
     q: '¿Sirve si aún no hay conector ERP?',
-    a: 'Sí. Cotizador, visitas y pipeline funcionan con catálogo de demostración o cargado en Vector. El conector se suma cuando el piloto lo requiere.',
+    a: 'Sí. Cotizador, visitas y embudo de oportunidades funcionan con catálogo de demostración o cargado en Vector. El conector se suma cuando el piloto lo requiere.',
   },
   {
     q: '¿El vendedor necesita laptop en campo?',
@@ -132,7 +134,7 @@ const faqs = [
   },
   {
     q: '¿Cómo se conecta Softland u Odoo?',
-    a: 'Softland: agente en el servidor de su empresa, con salida segura a internet. Odoo: conector en la nube. Detalle técnico en Producto → Información para su equipo de IT. Softland y Odoo están en piloto según la operación.',
+    a: 'Softland: agente en el servidor de su empresa, con salida segura a internet. Odoo: conector en la nube. Detalle técnico en Producto → Información para su equipo de IT. Softland y Odoo se habilitan según el alcance acordado del piloto.',
   },
 ];
 ---
@@ -169,10 +171,10 @@ const faqs = [
             Solicitar una demostración
           </a>
           <a
-            href="#roles"
+            href={hasVideo ? '#demo-video' : '#roles'}
             class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface"
           >
-            Ver cómo trabaja cada rol
+            {hasVideo ? 'Ver Vector en 90 segundos' : 'Ver cómo trabaja cada rol'}
           </a>
         </div>
         <p class="mt-3 text-xs text-muted">
@@ -235,11 +237,11 @@ const faqs = [
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div class="max-w-2xl">
         <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          Cada rol ve lo que le corresponde
+          Beneficios por rol
         </h2>
         <p class="mt-3 text-muted">
           El vendedor ejecuta en el móvil. Gerencia y supervisión profundizan
-          en web. La pantalla de inicio del vendedor es la ruta de hoy.
+          en web. El detalle de cada módulo está en Producto.
         </p>
       </div>
       <ul class="mt-8 grid items-start gap-8 lg:grid-cols-3 lg:gap-6">
@@ -267,113 +269,6 @@ const faqs = [
 
   <section class="border-t border-border">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-      <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-widest text-brand">
-            App de campo
-          </p>
-          <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            El vendedor trabaja desde el móvil
-          </h2>
-          <p class="mt-3 leading-relaxed text-muted">
-            Visitas y GPS son una fortaleza de Vector. En iOS y Android el
-            vendedor cierra el día: ruta, check-in, evidencia y borrador de
-            cotización. Con o sin señal estable, la información ya sincronizada
-            sostiene el trabajo; al recuperar conexión, Vector actualiza. El
-            mapa en vivo y la pantalla de gerencia permanecen en web.
-          </p>
-          <ul class="mt-6 space-y-3 text-sm text-muted">
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Inicio = visitas de hoy
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Check-in, fotos y pendientes en la misma visita
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Borrador con el catálogo de la última sincronización
-            </li>
-          </ul>
-        </div>
-        <div class="flex items-end justify-center gap-4 sm:gap-5 lg:justify-end">
-          <div class="w-[42%] max-w-[11.5rem] shrink-0 sm:max-w-[13rem]">
-            <ProductShot {...shots.mobileLogin} variant="phone" />
-          </div>
-          <div class="w-[48%] max-w-[13rem] shrink-0 sm:max-w-[14.5rem]">
-            <ProductShot {...shots.mobileVisita} variant="phone" mirror />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-t border-border bg-surface">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
-        <div>
-          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Expediente: un hilo, no paneles sueltos
-          </h2>
-          <p class="mt-3 leading-relaxed text-muted">
-            De prospecto a cliente la cuenta es la misma. El hilo muestra
-            visitas, cotizaciones y pedidos en orden; el resumen marca la
-            última visita, la última oferta y qué sigue. Al convertir, el
-            historial se conserva; solo se vincula el identificador del ERP.
-          </p>
-          <ul class="mt-5 space-y-2.5 text-sm text-muted">
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Próximo paso visible (visitar, cotizar, abrir)
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Observaciones y seguimientos en la misma cuenta
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Crédito y mora cuando ya es cliente ERP
-            </li>
-          </ul>
-        </div>
-        <ProductShot {...shots.expediente} variant="stage" />
-      </div>
-    </div>
-  </section>
-
-  <section class="border-t border-border">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-      <div class="max-w-2xl">
-        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          Cuatro ejes del producto
-        </h2>
-        <p class="mt-3 text-muted">
-          Priorizamos adopción, visitas y cotización operativa. Si una pantalla
-          no ayuda a ejecutar o a decidir, no entra.
-        </p>
-      </div>
-      <ul class="mt-8 grid gap-6 sm:grid-cols-2">
-        {
-          pillars.map((item) => (
-            <li class="border-l-2 border-brand pl-4">
-              <h3 class="text-base font-semibold text-ink">{item.title}</h3>
-              <p class="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
-  <section class="border-t border-border bg-surface">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div class="max-w-2xl">
         <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
           Del plan al pedido
@@ -393,75 +288,123 @@ const faqs = [
           ))
         }
       </ol>
+      <a
+        href={withBase('/producto')}
+        class="mt-8 inline-flex text-sm font-semibold text-brand hover:text-brand-dark"
+      >
+        Ver detalle de producto →
+      </a>
     </div>
   </section>
 
-  <section class="border-t border-border">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
-        <div>
-          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Cotizar en el CRM, con stock y versiones
-          </h2>
-          <p class="mt-3 leading-relaxed text-muted">
-            En el móvil se arma el borrador con el catálogo sincronizado. En
-            web se completa la oferta: existencias, versiones, PDF y envío
-            desde el correo del vendedor. Al aceptar, el pedido queda en
-            Vector.
-          </p>
-          <ul class="mt-5 space-y-2.5 text-sm text-muted">
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Existencia e IVA por línea
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Historial de versiones (v1, v2…)
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-              ></span>
-              Enviar y PDF desde la misma hoja
-            </li>
-          </ul>
+  {
+    hasVideo ? (
+      <section
+        id="demo-video"
+        class="scroll-mt-20 border-t border-border bg-surface"
+      >
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+          <div class="max-w-2xl">
+            <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Vector en 90 segundos
+            </h2>
+            <p class="mt-3 text-muted">
+              Ruta, visita, cotización y seguimiento — el recorrido que
+              mostramos en la demostración.
+            </p>
+          </div>
+          <div class="mt-8 aspect-video overflow-hidden rounded-xl border border-border bg-ink/5">
+            <iframe
+              src={site.demoVideoUrl}
+              title="Demo Vector"
+              class="h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            />
+          </div>
         </div>
+      </section>
+    ) : null
+  }
+
+  <section id="evidencia" class="scroll-mt-20 border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Así se utiliza Vector en una operación real
+        </h2>
+        {
+          hasTestimonial ? (
+            <figure class="mt-6">
+              <blockquote class="text-lg leading-relaxed text-ink">
+                “{pilotEvidence.quote}”
+              </blockquote>
+              {
+                pilotEvidence.attribution ? (
+                  <figcaption class="mt-3 text-sm text-muted">
+                    — {pilotEvidence.attribution}
+                  </figcaption>
+                ) : null
+              }
+              {
+                pilotEvidence.result ? (
+                  <p class="mt-4 text-sm font-medium text-ink">
+                    {pilotEvidence.result}
+                  </p>
+                ) : null
+              }
+            </figure>
+          ) : (
+            <div class="mt-6 space-y-3 text-muted">
+              <p>
+                Estamos utilizando Vector en un piloto de venta en campo:
+                rutas, visitas con evidencia, cotizaciones y el seguimiento que
+                ve supervisión y gerencia.
+              </p>
+              <p class="text-sm">
+                Cuando el piloto valide un testimonio y un resultado medido, los
+                publicaremos aquí — sin revelar configuración ni reglas propias
+                del cliente.
+              </p>
+            </div>
+          )
+        }
+      </div>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <ProductShot {...shots.expediente} variant="stage" />
         <ProductShot {...shots.quote} variant="stage" />
       </div>
     </div>
   </section>
 
-  <section class="border-t border-border bg-surface">
+  <section class="border-t border-border">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
-        <ProductShot
-          {...shots.decision}
-          variant="stage"
-          mirror
-          class="order-2 lg:order-1"
-        />
-        <div class="order-1 lg:order-2">
-          <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Gerencia con preguntas, no con widgets
-          </h2>
-          <p class="mt-3 leading-relaxed text-muted">
-            Ritmo de cuota, embudo por monto, oportunidades sin seguimiento y
-            a quién retomar: eso responde la pantalla del gerente. El mapa y
-            el panel del supervisor dan el día en caliente.
-          </p>
-          <a
-            href={withBase('/producto')}
-            class="mt-5 inline-flex text-sm font-semibold text-brand hover:text-brand-dark"
-          >
-            Detalle de producto →
-          </a>
-        </div>
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Así comenzamos
+        </h2>
+        <p class="mt-3 text-muted">
+          Responde qué implica ponerlo a funcionar en su empresa.
+        </p>
       </div>
+      <ol class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          startSteps.map((item, i) => (
+            <li>
+              <p class="text-sm font-bold tabular-nums text-brand">
+                {String(i + 1).padStart(2, '0')}
+              </p>
+              <h3 class="mt-1.5 text-base font-semibold text-ink">{item.title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
-  <section class="border-t border-border">
+  <section class="border-t border-border bg-surface">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
         Preguntas frecuentes
@@ -479,7 +422,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="border-t border-border bg-surface">
+  <section class="border-t border-border">
     <div
       class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 py-12 sm:flex-row sm:items-center sm:px-6 sm:py-14 lg:px-8"
     >
