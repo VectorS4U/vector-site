@@ -24,7 +24,7 @@ const extras = [
   },
   {
     title: 'Cuota y planes',
-    body: 'Los planes se anclan a pedidos reales. Decisión muestra el ritmo de lo que el equipo ya ejecutó.',
+    body: 'Los planes se anclan a pedidos reales. La pantalla de gerencia muestra el ritmo de lo que el equipo ya ejecutó.',
   },
   {
     title: 'IA opcional',
@@ -32,14 +32,47 @@ const extras = [
   },
   {
     title: 'Datos para BI',
-    body: 'Hechos hacia Postgres, BigQuery o Azure SQL. Power BI o Looker siguen del lado de su equipo.',
+    body: 'Exportación de información para análisis y BI (Power BI, Looker u otras herramientas). Su equipo elige el destino.',
+  },
+];
+
+const syncModes = [
+  {
+    title: 'Con conexión',
+    body: 'El vendedor puede refrescar catálogo, precios y resumen del cliente según el conector ERP activo. La supervisión y gerencia ven el estado actualizado en web.',
+  },
+  {
+    title: 'Sin conexión',
+    body: 'Trabaja con la información de la última sincronización: cuentas de la ruta, catálogo y resumen descargados. La fecha de esa sincronización es visible en la app.',
+  },
+  {
+    title: 'Antes de confirmar',
+    body: 'Cuando hay red, Vector vuelve a validar precios, existencias y condiciones relevantes antes de operaciones sensibles (por ejemplo, enviar o convertir en pedido).',
+  },
+];
+
+const integrations = [
+  {
+    name: 'Softland',
+    status: 'Piloto',
+    body: 'Agente en el servidor de su empresa. Catálogo, cliente y resumen comercial hacia Vector; el ERP sigue dueño de lo transaccional.',
+  },
+  {
+    name: 'Odoo',
+    status: 'Piloto',
+    body: 'Conector en la nube. Mismo principio: Vector concentra el ciclo comercial; Odoo mantiene maestros y facturación.',
+  },
+  {
+    name: 'Sin conector',
+    status: 'Disponible',
+    body: 'Visitas, pipeline y cotizador funcionan con catálogo de demostración o cargado en Vector mientras se define la integración.',
   },
 ];
 ---
 
 <BaseLayout
   title="Producto"
-  description="La venta se cierra en campo. El vendedor asesora con precio, existencia, crédito y el historial. Tratos, observaciones y seguimientos quedan en Vector."
+  description="Rutas, visitas, cotizaciones y seguimiento comercial. El vendedor asesora con precio, existencia e historial; gerencia ve la cuota y qué retomar."
 >
   <section class="relative overflow-hidden border-b border-border">
     <div
@@ -61,14 +94,14 @@ const extras = [
         </h1>
         <p class="mt-4 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
           Lleva a la visita el precio, la existencia, el crédito y el historial
-          de la cuenta. Tratos, observaciones y seguimientos quedan en Vector.
-          Usted ve la cuota, el embudo y lo que hay que retomar.
+          de la cuenta. Oportunidades, observaciones y seguimientos quedan en
+          Vector. Usted ve la cuota, el embudo y lo que hay que retomar.
         </p>
         <a
           href={withBase('/contacto')}
           class="mt-7 inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
         >
-          Solicitar demo
+          Solicitar una demostración
         </a>
       </div>
       <div
@@ -93,11 +126,11 @@ const extras = [
           </h2>
           <p class="mt-3 leading-relaxed text-muted">
             En iOS y Android el vendedor abre la ruta, registra la visita y
-            arma la cotización con el catálogo del día. En la cuenta tiene la
-            última oferta, el crédito, lo que se observó y el seguimiento
+            arma la cotización con el catálogo sincronizado. En la cuenta tiene
+            la última oferta, el crédito, lo que se observó y el seguimiento
             pendiente. Si se corta la señal, sigue con esa información. Al
-            volver la red, Vector sincroniza. Enviar la cotización pide
-            conexión.
+            volver la red, Vector actualiza el trabajo pendiente. Enviar la
+            cotización pide conexión.
           </p>
           <ul class="mt-6 space-y-3 text-sm text-muted">
             <li class="flex gap-3">
@@ -140,16 +173,16 @@ const extras = [
         />
         <div class="order-1 lg:order-2">
           <p class="text-sm font-semibold uppercase tracking-widest text-brand">
-            Decisión
+            Gerencia
           </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             Cuatro preguntas, una pantalla
           </h2>
           <p class="mt-3 leading-relaxed text-muted">
-            Cada visita deja el trato, la observación y el seguimiento en
+            Cada visita deja la oportunidad, la observación y el seguimiento en
             Vector. El supervisor ve cumplimiento y quién está en ruta. Usted
-            abre el ritmo de la cuota, el embudo por monto, los tratos quietos
-            y el equipo. Cada cifra lleva a su lista.
+            abre el ritmo de la cuota, el embudo por monto, las oportunidades
+            sin seguimiento y el equipo. Cada cifra lleva a su lista.
           </p>
           <ul class="mt-5 space-y-2.5 text-sm text-muted">
             <li class="flex gap-3">
@@ -165,7 +198,7 @@ const extras = [
             <li class="flex gap-3">
               <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
               ></span>
-              ¿Qué trato se enfrió?
+              ¿Qué oportunidad quedó sin seguimiento?
             </li>
             <li class="flex gap-3">
               <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
@@ -186,11 +219,11 @@ const extras = [
             Expediente
           </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Tratos, observaciones y seguimientos, en la misma cuenta
+            Oportunidades, observaciones y seguimientos, en la misma cuenta
           </h2>
           <p class="mt-3 leading-relaxed text-muted">
             La ficha abre el hilo de la relación: qué se visitó, qué se cotizó,
-            qué se anotó y qué sigue. Arriba, el pulso marca la última visita,
+            qué se anotó y qué sigue. Arriba, el resumen marca la última visita,
             la última oferta y el pendiente. El vendedor entra a la siguiente
             cita con esa lectura. Al convertir, Vector conserva el mismo
             registro y vincula el cliente del ERP.
@@ -212,7 +245,7 @@ const extras = [
         />
         <div class="order-1 lg:order-2">
           <p class="text-sm font-semibold uppercase tracking-widest text-brand">
-            Agenda y tracking
+            Agenda y seguimiento
           </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             El plan se aprueba. El seguimiento queda en la visita.
@@ -221,7 +254,7 @@ const extras = [
             El vendedor propone las visitas del periodo. El supervisor las
             aprueba. En cada parada quedan el check-in, la evidencia y la
             observación. En la oficina, el mapa muestra al equipo en ruta, las
-            geocercas, las paradas y la traza del día.
+            zonas de cobertura, las paradas y la traza del día.
           </p>
         </div>
       </div>
@@ -236,19 +269,78 @@ const extras = [
             Cotizador
           </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Asesora con existencia real. La oferta queda en Vector.
+            Asesora con existencia. La oferta queda en Vector.
           </h2>
           <p class="mt-3 leading-relaxed text-muted">
-            En la visita arma el borrador con el catálogo del día: producto,
-            precio y existencia para responder ahí mismo. En la web se cierran
-            las versiones, el PDF y el envío desde el correo del vendedor. Si
-            el descuento pide aprobación, el flujo sigue en la misma hoja. Si
-            la oportunidad se pierde, queda el motivo. Si el cliente acepta, el
-            pedido nace de esa cotización.
+            En la visita arma el borrador con el catálogo sincronizado:
+            producto, precio y existencia para responder ahí mismo. En la web
+            se cierran las versiones, el PDF y el envío desde el correo del
+            vendedor. Si el descuento pide aprobación, el flujo sigue en la
+            misma hoja. Si la oportunidad se pierde, queda el motivo. Si el
+            cliente acepta, el pedido nace de esa cotización.
           </p>
         </div>
         <ProductShot {...shots.quote} variant="stage" />
       </div>
+    </div>
+  </section>
+
+  <section id="sincronizacion" class="scroll-mt-20 border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-widest text-brand">
+          Información del ERP
+        </p>
+        <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Conexión, sin señal y validación al confirmar
+        </h2>
+        <p class="mt-3 text-muted">
+          Diferenciamos qué consulta se hace en vivo, qué se trabaja con la
+          última sincronización y qué se vuelve a validar antes de confirmar.
+        </p>
+      </div>
+      <ul class="mt-8 grid gap-6 sm:grid-cols-3">
+        {
+          syncModes.map((item) => (
+            <li class="rounded-xl border border-border bg-white p-5">
+              <h3 class="text-base font-semibold text-ink">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="text-sm font-semibold uppercase tracking-widest text-brand">
+          Integraciones
+        </p>
+        <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Qué está operativo y qué está en piloto
+        </h2>
+        <p class="mt-3 text-muted">
+          Vendemos con claridad: el ciclo comercial corre en Vector; los
+          conectores ERP se habilitan según la operación.
+        </p>
+      </div>
+      <ul class="mt-8 grid gap-6 sm:grid-cols-3">
+        {
+          integrations.map((item) => (
+            <li class="border-l-2 border-brand pl-4">
+              <div class="flex flex-wrap items-baseline gap-2">
+                <h3 class="text-base font-semibold text-ink">{item.name}</h3>
+                <span class="text-xs font-semibold uppercase tracking-wider text-brand">
+                  {item.status}
+                </span>
+              </div>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -289,32 +381,82 @@ const extras = [
         />
         <div class="order-1 lg:order-2">
           <p class="text-sm font-semibold uppercase tracking-widest text-brand">
-            Integración ERP
+            ERP y negociación
           </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             Asesora con el dato del ERP. La negociación sigue en Vector.
           </h2>
           <p class="mt-3 leading-relaxed text-muted">
-            Softland entra con un agente en el servidor de su empresa, por
-            HTTPS de salida. Odoo, desde la nube. En la ficha el vendedor ve
-            catálogo, precio, crédito y mora, y responde con ese dato. El
-            estado de cuenta en PDF se activa cuando lo necesitan. Tratos,
-            observaciones y seguimientos siguen en Vector. Mientras el conector
-            entra en piloto, el ciclo se recorre con datos de demostración.
+            Softland y Odoo siguen dueños de lo transaccional. En la ficha el
+            vendedor ve catálogo, precio, crédito y mora cuando el conector lo
+            permite, y responde con ese dato. Oportunidades, observaciones y
+            seguimientos viven en Vector. Mientras el conector entra en piloto,
+            el ciclo se recorre con datos de demostración.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="border-t border-border bg-surface">
+  <section id="it" class="scroll-mt-20 border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+      <details class="group rounded-xl border border-border bg-white open:shadow-sm">
+        <summary
+          class="cursor-pointer list-none px-5 py-4 text-base font-semibold text-ink marker:content-none [&::-webkit-details-marker]:hidden sm:px-6 sm:py-5 sm:text-lg"
+        >
+          <span class="flex items-center justify-between gap-4">
+            Información para su equipo de IT
+            <span
+              class="shrink-0 text-sm font-medium text-brand transition group-open:rotate-45"
+              aria-hidden="true">+</span
+            >
+          </span>
+        </summary>
+        <div class="border-t border-border px-5 py-5 text-sm leading-relaxed text-muted sm:px-6 sm:py-6">
+          <ul class="space-y-4">
+            <li>
+              <span class="font-semibold text-ink">Softland.</span>
+              Agente instalado en el servidor de su empresa, con salida segura a
+              internet hacia Vector. No requiere exponer el ERP a internet
+              entrante. Alcance del piloto: catálogo, cliente y resumen
+              comercial según el alcance acordado.
+            </li>
+            <li>
+              <span class="font-semibold text-ink">Odoo.</span>
+              Conector en la nube hacia su instancia. Misma separación: Vector
+              es dueño del ciclo comercial; Odoo de maestros y transaccional.
+            </li>
+            <li>
+              <span class="font-semibold text-ink">Sincronización móvil.</span>
+              La app descarga la información del día (cuentas de ruta, catálogo,
+              resumen) para trabajar sin señal. Los registros creados offline
+              quedan pendientes de envío hasta recuperar conexión.
+            </li>
+            <li>
+              <span class="font-semibold text-ink">BI (add-on).</span>
+              Exportación de información para análisis hacia el destino que
+              defina su equipo (por ejemplo almacenes analíticos o herramientas
+              de BI).
+            </li>
+            <li>
+              <span class="font-semibold text-ink">Hosting.</span>
+              Vector se opera como servicio. Detalle de red, certificados y
+              ventanas de mantenimiento se acuerdan en el piloto.
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="border-t border-border">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div class="max-w-2xl">
         <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
           Cuando la operación ya corre
         </h2>
         <p class="mt-3 text-muted">
-          Cuatro capas que se suman cuando la venta en campo ya corre. La
+          Capas que se suman cuando la venta en campo ya está en marcha. La
           visita, la cotización y el seguimiento arrancan sin ellas.
         </p>
       </div>
@@ -331,7 +473,7 @@ const extras = [
     </div>
   </section>
 
-  <section class="border-t border-border">
+  <section class="border-t border-border bg-surface">
     <div
       class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 py-12 sm:flex-row sm:items-center sm:px-6 sm:py-14 lg:px-8"
     >
@@ -340,22 +482,16 @@ const extras = [
           Prospecto en Vector. Cliente en el ERP. El mismo expediente.
         </h2>
         <p class="mt-2 text-muted">
-          Al ganar se vincula el cliente del ERP. Tratos, visitas y
-          seguimientos permanecen en el mismo expediente. Operado por {site.company}. Escríbanos a{' '}
-          <a
-            href={`mailto:${site.contactEmail}?subject=Demo%20Vector`}
-            class="font-medium text-ink underline decoration-border underline-offset-4 hover:text-brand"
-          >
-            {site.contactEmail}
-          </a>
-          {' '}y armamos la demo con una ruta, una cotización y la pantalla de gerencia.
+          Al ganar se vincula el cliente del ERP. Visitas, cotizaciones y
+          seguimientos permanecen en el mismo expediente. Una plataforma de{' '}
+          {site.company} — {site.companyLegal}.
         </p>
       </div>
       <a
         href={withBase('/contacto')}
         class="inline-flex shrink-0 items-center justify-center rounded-lg bg-ink px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
       >
-        Agendar conversación
+        Solicitar una demostración
       </a>
     </div>
   </section>

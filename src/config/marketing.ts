@@ -3,7 +3,7 @@
 export const shots = {
   decision: {
     src: '/marketing/hero-decision.webp',
-    alt: 'Home Decisión del gerente: ritmo de cuota, embudo, tratos quietos y asesores',
+    alt: 'Pantalla de gerencia: ritmo de cuota, embudo, oportunidades sin seguimiento y asesores',
     width: 1440,
     height: 900,
   },
@@ -21,7 +21,7 @@ export const shots = {
   },
   team: {
     src: '/marketing/home-team.webp',
-    alt: 'Home Equipo del supervisor: cumplimiento, alertas y roster',
+    alt: 'Panel del supervisor: cumplimiento, alertas y equipo en campo',
     width: 1440,
     height: 900,
   },

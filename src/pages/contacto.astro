@@ -2,78 +2,211 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../config/site';
 
+const formAction = `https://formsubmit.co/${site.contactEmail}`;
+const whatsappUrl = site.whatsappE164
+  ? `https://wa.me/${site.whatsappE164}?text=${encodeURIComponent(
+      'Hola, quiero solicitar una demostración de Vector.',
+    )}`
+  : null;
+
 const topics = [
-  'Demo de app de campo, Home Equipo y Decisión gerencial',
-  'Cotizador con catálogo y pedido de prueba',
-  'Integración Softland u Odoo según su operación',
+  'Una ruta del día y una visita con evidencia',
+  'Una cotización con catálogo de ejemplo',
+  'El seguimiento que ve gerencia y supervisión',
+  'Integración Softland u Odoo según su operación (piloto)',
 ];
 ---
 
 <BaseLayout
   title="Contacto"
-  description={`Solicite una demo de Vector. Escríbanos a ${site.contactEmail}.`}
+  description="Solicite una demostración de Vector. Complete el formulario o escríbanos; en la sesión recorremos ruta, visita, cotización y seguimiento."
 >
   <section class="border-b border-border bg-surface">
     <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
       <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-        Contacto
+        Solicitar una demostración
       </h1>
       <p class="mt-3 max-w-2xl text-lg text-muted">
-        Cuéntenos cómo vende su equipo hoy. Le mostramos la app de campo,
-        Decisión gerencial, cotizador e integración ERP.
+        En la demostración recorreremos una ruta, una visita, una cotización y
+        el seguimiento de gerencia, con datos de ejemplo cercanos a su
+        operación.
       </p>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-14">
       <div>
-        <h2 class="text-lg font-semibold text-ink">Escríbanos</h2>
+        <h2 class="text-lg font-semibold text-ink">Cuéntenos sobre su equipo</h2>
         <p class="mt-2 text-sm leading-relaxed text-muted">
-          Correo comercial de Vector y {site.company}. Respondemos para agendar
-          una demo o un piloto.
+          Respondemos para agendar la sesión. Los campos con * son
+          obligatorios.
         </p>
 
-        <div class="mt-8 space-y-6">
+        <form
+          class="mt-8 space-y-5"
+          action={formAction}
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="Demo Vector — solicitud web" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input
+            type="text"
+            name="_honey"
+            class="hidden"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-ink">
+                Nombre *
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                autocomplete="name"
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+                placeholder="Su nombre"
+              />
+            </div>
+            <div>
+              <label for="company" class="block text-sm font-medium text-ink">
+                Empresa *
+              </label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                required
+                autocomplete="organization"
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+                placeholder="Nombre de la empresa"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="email" class="block text-sm font-medium text-ink">
+                Correo *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+                placeholder="correo@empresa.com"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-ink">
+                Teléfono o WhatsApp
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+                placeholder="+505 …"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="sellers" class="block text-sm font-medium text-ink">
+                Cantidad aproximada de vendedores *
+              </label>
+              <select
+                id="sellers"
+                name="sellers"
+                required
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 focus:border-brand focus:ring-2"
+              >
+                <option value="">Seleccione…</option>
+                <option value="1-10">1 – 10</option>
+                <option value="11-25">11 – 25</option>
+                <option value="26-50">26 – 50</option>
+                <option value="51-100">51 – 100</option>
+                <option value="100+">Más de 100</option>
+              </select>
+            </div>
+            <div>
+              <label for="erp" class="block text-sm font-medium text-ink">
+                ERP actual (opcional)
+              </label>
+              <input
+                id="erp"
+                name="erp"
+                type="text"
+                class="mt-1.5 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+                placeholder="Softland, Odoo, SAP, otro…"
+              />
+            </div>
+          </div>
+
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-ink">
-              Correo
-            </p>
+            <label for="problem" class="block text-sm font-medium text-ink">
+              Principal problema que quiere resolver *
+            </label>
+            <textarea
+              id="problem"
+              name="problem"
+              required
+              rows="4"
+              class="mt-1.5 w-full resize-y rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-ink outline-none ring-brand/30 placeholder:text-muted/60 focus:border-brand focus:ring-2"
+              placeholder="Ej.: visitas sin seguimiento, cotizaciones fuera del CRM, gerencia sin visibilidad del día…"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
+            >
+              Enviar solicitud
+            </button>
+            {
+              whatsappUrl ? (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-surface"
+                >
+                  Escribir por WhatsApp
+                </a>
+              ) : null
+            }
+          </div>
+          <p class="text-xs text-muted">
+            También puede escribir a{' '}
             <a
               href={`mailto:${site.contactEmail}?subject=Demo%20Vector`}
-              class="mt-1 inline-block text-xl font-semibold text-brand hover:text-brand-dark"
+              class="font-medium text-ink underline decoration-border underline-offset-2 hover:text-brand"
             >
               {site.contactEmail}
             </a>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-ink">
-              Empresa
-            </p>
-            <a
-              href={site.companyUrl}
-              class="mt-1 inline-block text-base font-semibold text-ink underline decoration-border underline-offset-4 hover:text-brand"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              group4u.net
-            </a>
-            <p class="mt-2 text-sm text-muted">
-              Sitio oficial de {site.company}, la empresa detrás de Vector.
-            </p>
-          </div>
-        </div>
-
-        <a
-          href={`mailto:${site.contactEmail}?subject=Demo%20Vector&body=Hola%2C%20quiero%20una%20demo%20de%20Vector.`}
-          class="mt-10 inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-dark"
-        >
-          Abrir correo
-        </a>
+            {
+              whatsappUrl
+                ? '. WhatsApp disponible como alternativa al formulario.'
+                : '.'
+            }
+          </p>
+        </form>
       </div>
 
       <div>
-        <h2 class="text-lg font-semibold text-ink">Qué podemos cubrir</h2>
+        <h2 class="text-lg font-semibold text-ink">Qué cubre la demostración</h2>
         <ul class="mt-5 space-y-3">
           {
             topics.map((topic) => (
@@ -84,11 +217,23 @@ const topics = [
             ))
           }
         </ul>
-        <p class="mt-6 text-sm leading-relaxed text-muted">
-          Incluya en el mensaje el tamaño del equipo de campo, el ERP actual (si
-          aplica) y si busca demo o piloto. Así preparamos la sesión con el
-          flujo adecuado.
-        </p>
+
+        <div class="mt-8 rounded-xl border border-border bg-surface p-5">
+          <p class="text-sm font-semibold text-ink">Quiénes somos</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Vector es una plataforma de {site.company} — {site.companyLegal}.
+            Más sobre la empresa en{' '}
+            <a
+              href={site.companyUrl}
+              class="font-medium text-ink underline decoration-border underline-offset-2 hover:text-brand"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              group4u.net
+            </a>
+            .
+          </p>
+        </div>
       </div>
     </div>
   </section>
