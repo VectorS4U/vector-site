@@ -16,7 +16,7 @@ const pains = [
   },
   {
     title: 'Demasiadas pantallas, poca ejecución',
-    body: 'El equipo necesita la ruta de hoy y una cotización con datos del catálogo. Configurar tableros no cierra la visita.',
+    body: 'El equipo necesita información clara para preparar la visita, atender al cliente y dar continuidad a cada oportunidad.',
   },
   {
     title: 'Negociación y facturación, cada una en su lugar',
@@ -332,7 +332,9 @@ const faqs = [
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div class="max-w-2xl">
         <h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          Así se utiliza Vector en una operación real
+          {hasTestimonial
+            ? 'Así se utiliza Vector en una operación real'
+            : 'Vector en operación piloto'}
         </h2>
         {
           hasTestimonial ? (
@@ -356,18 +358,11 @@ const faqs = [
               }
             </figure>
           ) : (
-            <div class="mt-6 space-y-3 text-muted">
-              <p>
-                Estamos utilizando Vector en un piloto de venta en campo:
-                rutas, visitas con evidencia, cotizaciones y el seguimiento que
-                ve supervisión y gerencia.
-              </p>
-              <p class="text-sm">
-                Cuando el piloto valide un testimonio y un resultado medido, los
-                publicaremos aquí — sin revelar configuración ni reglas propias
-                del cliente.
-              </p>
-            </div>
+            <p class="mt-6 text-muted">
+              Estamos utilizando Vector en un piloto de venta en campo: rutas,
+              visitas con evidencia, cotizaciones y el seguimiento que ve
+              supervisión y gerencia.
+            </p>
           )
         }
       </div>
