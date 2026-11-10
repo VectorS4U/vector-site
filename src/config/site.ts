@@ -38,6 +38,8 @@ export const site = {
    * Override: PUBLIC_DEMO_VIDEO_URL
    */
   demoVideoUrl: (import.meta.env.PUBLIC_DEMO_VIDEO_URL as string | undefined)?.trim() ?? '',
+  /** Google Analytics 4 — Measurement ID */
+  gaMeasurementId: 'G-WMEL656NY',
 } as const;
 
 /**
