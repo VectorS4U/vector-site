@@ -39,7 +39,7 @@ export const site = {
    */
   demoVideoUrl: (import.meta.env.PUBLIC_DEMO_VIDEO_URL as string | undefined)?.trim() ?? '',
   /** Google Analytics 4 — Measurement ID */
-  gaMeasurementId: 'G-WMEL656NY',
+  gaMeasurementId: 'G-GWMEL656NY',
 } as const;
 
 /**
